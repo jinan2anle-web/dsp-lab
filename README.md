@@ -66,6 +66,14 @@ add_pylibs()                    # 之后才能 import scipy / matplotlib / sklea
 
 以后若把 `_env` 挪到仓库根目录，只改 `dsp/env.py` 里的候选路径即可，其余代码不动。
 
+**换机器 / 全新环境**：`_env` 不进 git（403 MB），所以 clone 下来的人拿不到这三个库。用仓库根的 `requirements.txt` 装一遍即可：
+
+```powershell
+python -m venv .venv; .venv\Scripts\activate; pip install -r requirements.txt
+```
+
+装好正式依赖后，`add_pylibs()` 就不再是必需的。
+
 验证骨架是否装好：
 
 ```powershell
@@ -76,15 +84,29 @@ add_pylibs()                    # 之后才能 import scipy / matplotlib / sklea
 
 ## 五、Git
 
-本机目前**没有安装 Git**（`git --version` 报找不到命令），且当前环境无外网，装不上去，所以仓库还没有 `git init`。装好后一条命令即可生效：
+**已就绪（2026-10-23）。** 装的是 **PortableGit 2.55.0**（免管理员权限的绿色版，`winget` 需要 UAC 提权装不上，故改用绿色版）：
+
+```
+C:\Users\jinan2an\tools\PortableGit\cmd\git.exe    ← 已写入用户级 PATH，新开终端即可用 git
+```
+
+仓库已 `git init`（分支 `main`）并完成两个提交，共 **225 个跟踪文件**：
+
+| 提交 | 内容 | 文件数 |
+| --- | --- | --- |
+| `87fab81` | `chore: 建立仓库骨架与实验二三主线目录` | 11 |
+| `017f91f` | `chore: 归档第一、二周成果与原始录音（音频仅保留 data/A 一份）` | 214 |
+
+远端已配置：`origin → https://github.com/jinan2an/dsp-lab.git`（**尚未推送**，需先在 GitHub 建同名空仓库）。
+
+换一台机器要重建，仍可用同一条命令：
 
 ```powershell
-# 1) 安装：https://git-scm.com/download/win  （一路默认即可）
-# 2) 重开终端，在项目根目录执行：
+git init -b main
 powershell -ExecutionPolicy Bypass -File .\tools\init_repo.ps1
 ```
 
-脚本会自动完成：`git init -b main` → 配置 `core.quotepath=false` → 补 `user.name/email` → 两个提交（①骨架 ②第一二周归档）→ 打印 `git log`。可重复运行，已完成的步骤自动跳过。
+脚本会完成：`git init -b main` → 配置 `core.quotepath=false` → 补 `user.name/email` → 两个提交 → 打印 `git log`。可重复运行，已完成的步骤自动跳过。
 
 日常约定：
 

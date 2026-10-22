@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env pwsh
+#!/usr/bin/env pwsh
 <#
 .SYNOPSIS
     一条命令把「数字信号处理」项目目录变成 git 仓库。
@@ -59,7 +59,8 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Host '请先安装 Git for Windows: https://git-scm.com/download/win' -ForegroundColor Yellow
     Write-Host '安装时全部保持默认即可；装完关掉终端重新打开，再运行本脚本。' -ForegroundColor Yellow
     Write-Host ''
-    Write-Host '说明：当前这台机器没有外网，无法自动下载安装包（已确认 api.github.com 不可达）。' -ForegroundColor DarkGray
+    Write-Host '说明：本机现用绿色版 PortableGit（C:\Users\jinan2an\tools\PortableGit\cmd\git.exe），' -ForegroundColor DarkGray
+    Write-Host '      若该路径失效，可用 winget install --id Git.Git -e --source winget 重装（需 UAC 提权）。' -ForegroundColor DarkGray
     Write-Host '仓库骨架（README / .gitignore / docs / dsp / tools）已经就位，装好 Git 后一条命令即可生效。' -ForegroundColor DarkGray
     exit 1
 }

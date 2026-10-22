@@ -1,0 +1,26 @@
+# 数字信号处理实验 · Python 依赖
+#
+# 为什么需要这个文件：
+#   运行环境曾放在 task1_w2/_env/pylibs（403 MB），而 _env 被 .gitignore 排除，
+#   所以 clone 下来的人没有 scipy / matplotlib / scikit-learn，脚本跑不了。
+#   这里把当时实测可用的版本钉死，照着装即可复现。
+#
+# 安装：
+#   python -m venv .venv
+#   .venv\Scripts\activate
+#   pip install -r requirements.txt
+#
+# 装了这些之后，dsp/env.py 里的 add_pylibs() 就不再是必需的
+# （它只是把 _env/pylibs 拼进 sys.path 的兜底手段，正式依赖装好后可以不调）。
+
+# Python 3.12（实测 3.12.14）
+
+numpy==2.3.5
+pandas==3.0.1
+scipy==1.16.3
+matplotlib==3.10.6
+scikit-learn==1.7.2
+
+# 报告与文档生成（已在 dsh 自带 python 中预装，独立环境需要时取消注释）
+# python-docx==1.2.0
+# python-pptx==1.0.2
