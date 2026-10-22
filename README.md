@@ -1,4 +1,4 @@
-﻿# 数字信号处理实验 · 课程项目仓库
+# 数字信号处理实验 · 课程项目仓库
 
 语音识别系列实验的代码、报告与归档。原始要求见 [数字信号处理实验.pdf](数字信号处理实验.pdf)（扫描版，17 页，无文字层，逐条拆解见 [docs/验收清单.md](docs/验收清单.md)）。
 
@@ -90,14 +90,17 @@ python -m venv .venv; .venv\Scripts\activate; pip install -r requirements.txt
 C:\Users\jinan2an\tools\PortableGit\cmd\git.exe    ← 已写入用户级 PATH，新开终端即可用 git
 ```
 
-仓库已 `git init`（分支 `main`）并完成两个提交，共 **225 个跟踪文件**：
+仓库已 `git init`（分支 `main`）并推送到 GitHub：
+
+**<https://github.com/jinan2anle-web/dsp-lab>**（Public）
 
 | 提交 | 内容 | 文件数 |
 | --- | --- | --- |
 | `87fab81` | `chore: 建立仓库骨架与实验二三主线目录` | 11 |
 | `017f91f` | `chore: 归档第一、二周成果与原始录音（音频仅保留 data/A 一份）` | 214 |
+| `0590db6` | `docs: 更新 Git 状态为已就绪；补 requirements.txt` | 3 |
 
-远端已配置：`origin → https://github.com/jinan2anle-web/dsp-lab.git`（**尚未推送**，已推送完成）。
+远端：`origin → https://github.com/jinan2anle-web/dsp-lab.git`
 
 换一台机器要重建，仍可用同一条命令：
 
