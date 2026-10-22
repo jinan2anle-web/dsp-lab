@@ -1,0 +1,40 @@
+==============================================================================
+接口契约自检报告（接口冻结出口判据）
+依据：《接口冻结说明》2026-10-05 版
+被测数据：A\A（100 个 wav）
+==============================================================================
+检查项总数：28    通过：28    失败：0
+
+编号	检查项	判据	实测	结论
+F1	文件命名 {数字}_{序号:02d}.wav（序号 01~10）	不符合项 0 个	不符合项 0 个 []	PASS
+F2	数字覆盖 0~9，每类 10 组	10 类 × 每类 10 组 = 100	10 类，每类 [10] 组，共 100 个	PASS
+F3	按说话人建文件夹存放	存在 A\A\*.wav	A\A	PASS
+W0	read_wav 返回四元组 (wave_data, sample_rate, num_channels, bits_per_sample)	tuple 且长度 4	type=tuple len=4	PASS
+W1	wave_data 为 numpy 一维数组（16bit 原始量化值，未归一化）	ndarray, ndim=1	ndarray ndim=1 max|x|=32032	PASS
+W2	采样率 sample_rate = 16000	16000	16000	PASS
+W3	通道数 num_channels = 1（单声道）	1	1	PASS
+W4	量化位深 bits_per_sample = 16	16	16	PASS
+W5	采样点数为 block_align（2 字节）整数倍	全部整除	min=24000 max=24000	PASS
+W6	全部文件元数据一致（fs/ch/bits 组合唯一）	1 种组合	1 种 [(16000, 1, 16)]	PASS
+S1	enframe 返回 (帧矩阵 [n_frames, frame_len], 窗 [frame_len])	frames.shape=(1,400), w.shape=(400,)	(1, 400), (400,)	PASS
+S2	win='rect' 窗序列恒为 1	w ≡ 1	min=1.0 max=1.0	PASS
+S3	三种窗型 rect/hamming/hanning 均可调用	无异常	OK	PASS
+S4	短时能量 E_n = Σx²（全 1 帧应为 400，共 6 帧）	400 × 6	400.000000 × 6	PASS
+S5	短时平均幅度 M_n = Σ|x|（全 1 帧应为 400）	400	400.000000	PASS
+S6	归一化过零率 Z_n ∈ [0,1]（交替序列接近 1）	0 ≤ Z ≤ 1 且 Z > 0.99	0.9975	PASS
+S7	remove_dc 后直流为 0	|mean| < 1e-9	0.00e+00	PASS
+D1	纯静音输入：返回 None 且不抛异常	None	None	PASS
+D2	有效语音：返回 dict 且含全部约定字段（16 个）	字段齐全	缺失 无	PASS
+D3	端点帧号满足 N1 ≤ N2 ≤ N3 ≤ N4 ≤ N5 ≤ N6	单调不减	36,36,40,48,54,55	PASS
+D4	双门限满足 0 < T1 < T2	0 < T1 < T2	T1=1434529679.0822 T2=4781765596.9406	PASS
+D5	语音段 0 ≤ start < end ≤ 录音时长 1.5 s	0 ≤ start < end ≤ 1.5	start=0.360 s end=0.560 s	PASS
+T1	time_domain_feature 输出 [T, 3]	shape[1] = 3	(148, 3)	PASS
+T2	特征已逐序列零均值单位方差归一化	|mean| < 1e-6 且 |std−1| < 1e-6	|mean|=1.38e-15 |std−1|=1.55e-08	PASS
+T3	dtw_distance(a,a) = 0	0	0.000000	PASS
+T4	dtw_distance 满足对称性	|d(a,b) − d(b,a)| < 1e-9	0.00e+00	PASS
+T5	dtw_distance 非负且不同样本距离大于 0	> 0	0.288206	PASS
+T6	DTWClassifier(band_ratio=0.35).fit/predict 可跑通	predict 返回长度 1 的标签数组	['0']	PASS
+
+出口判据：全部检查项 PASS（接口冻结的唯一硬性判据）。
+当前状态：全部通过（被测数据：A\A 的 100 个 wav）
+备注：本框架与数据源无关；若有新的录音提交入库，把 WAV_DIR 指到对应目录重跑即可复检。

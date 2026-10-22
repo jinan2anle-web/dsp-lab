@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-18T07:23:48.489305+00:00",
+  "random_seed": 42,
+  "input_files": [
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_01.wav",
+      "sha256": "a7c02407d810d345049e20f07c1c56039db215085ede5bbb3de2575de3dd36f4",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_02.wav",
+      "sha256": "204ed87bb9714a2da4fa16e8d72be893b3a6ae15868f4b2af1ba00450211764a",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_03.wav",
+      "sha256": "cb0593419f9640d9475ce503a8c4e3b4e228b90cba4ab40771c4fe8a14de4764",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_04.wav",
+      "sha256": "fa2f3988561bcbf109e60b0773694e6d31ad6338808f431e0bea0af7f2b1b014",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_05.wav",
+      "sha256": "08f121b5266e315f63d0c84cda83f63c72badb95ee2c4b0b4235427b67f0c742",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_06.wav",
+      "sha256": "3d27ccaa76fdf279c59552f49450b22529dc474afa68fd9e5ae7cb5de7da8604",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_07.wav",
+      "sha256": "8831e5264a536fc588af17cf59de8cc1ad6399ad1c3abd8e885a1ee5fd7eab07",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_08.wav",
+      "sha256": "6db7273e780ae0cfc41c6e3d84c137529a9c9c9f209f3c7385f4e1c51cd2e13a",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_09.wav",
+      "sha256": "7a6bd632d7e0093c82450292590693ba860725e74060fd63b62eb41c9dab71da",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\0_10.wav",
+      "sha256": "b865126a255ce311af2638e9f2b1f92d928bf47504ead1c9d3767bb9546282e3",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_01.wav",
+      "sha256": "05394fe89611cc1d2fa6bcf2847a6520e99b98127c89a348727a910830999f05",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_02.wav",
+      "sha256": "82ed03a9fbc488748bf1cb2d38be929f28de3fe7159fd68d48c9217db354cc31",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_03.wav",
+      "sha256": "81c4305118a75fc08e876ebab72864e5cab55ed6609815bed5f44c35c73fe21b",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_04.wav",
+      "sha256": "264cb84e752be29a19081884409d288d1f2cf2edeb4db0a2447dd743fe44b2a3",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_05.wav",
+      "sha256": "889e3208ce43d44190d13f77152ef46fb32b74bb75c1a9854b59cd0de9a454ba",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_06.wav",
+      "sha256": "200d48fd18060c204b48b9920251579cddc32aa123a4c4d10710f8448bcf58be",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_07.wav",
+      "sha256": "a5fea9cd1cb312c27bb49c8d25bbf0c6b8c49d97e01373da920e8b040e7eb5d7",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_08.wav",
+      "sha256": "2b717df4d243f8d0473f55de95f7f09b7b66154ab7f91cb60c77ff4b26693398",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_09.wav",
+      "sha256": "e798ffa633c4d7e76236b4bd644cce56b02e90f8a7ac4844aedb510e068c4409",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\1_10.wav",
+      "sha256": "0088632a400ee96dd846bd0b2527e0571fa404f1b0ecc1940561585b02fc9894",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_01.wav",
+      "sha256": "d9eabc35b7df0ee4eb8d85de4a94f80dbfd15b963f46875ee6b844abfee2bf78",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_02.wav",
+      "sha256": "a013c4792eb06df1bec3a93cfc49e4ec398ed755e3bb13dc90a59ea51895489d",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_03.wav",
+      "sha256": "affc7ec806227a4d7c9229dbb304aa41ca1e2ff896ab1e149a5c1b32278da0da",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_04.wav",
+      "sha256": "fca3ecc9275f9e987d4e1b6962e7cbceb6b988edd5e88a1064c2b9a5349751e6",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_05.wav",
+      "sha256": "59de151c2310a9bfd4c6c3200cfab91d54cc798c8e621d9121d632a455ee6db2",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_06.wav",
+      "sha256": "3952a2835cd4d68d55b9cb93655d847815c6387cb69fb31303caca660957377f",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_07.wav",
+      "sha256": "727eecd023ce3cb26050230ad9d83ad982e38596d0e80d26fb74a97164aa19c1",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_08.wav",
+      "sha256": "8482b2a1b34e6d190c491d52196c5944b837224addcdf95e10d6027f88dd84e3",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_09.wav",
+      "sha256": "2ac5e2ac8cdfdef5fc68b84e6eb07f67243e9ebb6ff130b2e5d243d2be89b844",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\2_10.wav",
+      "sha256": "5c36eef91f7377adad7a3a508a45b31d300b27a5c0bbab04dbeae0d78371e9ab",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_01.wav",
+      "sha256": "fbe13a4d9ec550b9d85fedcf491b0e61c4403d869d8deccf3717a46914c89706",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_02.wav",
+      "sha256": "d13b8ed980d41abc2e1c78df38dd14ab7ee78068443ea8003c3f2b7639422154",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_03.wav",
+      "sha256": "fd1a3e793f810939bb559e2f08eca3bef869401f7a1d8e846e7c6d5d11b212a5",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_04.wav",
+      "sha256": "6ba8fe24cad2f0326482c305bc82e5e3f8c6ee3fd35fa89bd7cf8732e8f130a7",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_05.wav",
+      "sha256": "bd44596e3be8d0098fae055c43a16f9dee64de4515b2a8977e72d540a8c496d0",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_06.wav",
+      "sha256": "1213f1cf5a94160bc5dd6194f7553ca184949015910d3f2ffc13d7665c45d478",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_07.wav",
+      "sha256": "6ec2f7bc9521248af51c36681a80dea8950e8b39532408303335a4397a88fd1c",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_08.wav",
+      "sha256": "247a1132aca87571d4cafc2b65bab9dc62608369639f5bcc40dfd65cf4aba8f2",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_09.wav",
+      "sha256": "e946a64508f8c96af63e7fdd2fcdd5d2dde163ed7a8e45a9cb50ab9274d83897",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\3_10.wav",
+      "sha256": "b3cf701cff875d4921e1bf76d2e46b16a97d7a03eb1dddab8b6eca055e18aa93",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_01.wav",
+      "sha256": "5cf08e81c5ddf60b4d37ae9ba46ea4102f937cd64395b0d654540c2c9cc45649",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_02.wav",
+      "sha256": "1fda1699dc5618235c00c0c75d1b44636efe406eeee4df608fa585aa1fac0154",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_03.wav",
+      "sha256": "1b25426460d916cd8d287ccda158d8292162dbdbe35ad3bdd33a954da2cf44f8",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_04.wav",
+      "sha256": "37bfd4a933b9ad923e135093a5a13fcd697ee48eda4ad67caabdb967ca467317",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_05.wav",
+      "sha256": "69ec5653b35ca93e84114d0c12fe4aed09883f599b467edb134bb7bbdb702cd2",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_06.wav",
+      "sha256": "99b6afb0d82ab350f9b6c6581107fae46cfa2cc5e19f1a3b31f6cd777f9eed03",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_07.wav",
+      "sha256": "cfd21cee562060288cc2b906a68c3d744b7b4c9ec85ac7a510386f3533515705",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_08.wav",
+      "sha256": "9553c64bcf788e68242250bfbfc422b7f61a8e28ccc5fea7ba7e2e4d78804176",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_09.wav",
+      "sha256": "3defcfdf6feea5a457432701603a36335f3fc31933ebc3a02b3522b6136232aa",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\4_10.wav",
+      "sha256": "da4eb30613a16bab44e6e20beb6a370a51e36447b31ddcd412b3558558cd0d40",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_01.wav",
+      "sha256": "eac6d7fe63fd84f446c80d82851d12b1e484892f2c48d6c19d32fe6c54251f4f",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_02.wav",
+      "sha256": "6398bcd2de4c1634df3b9d726425ed656af2c6c3641a0bfda7d8af33d950df18",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_03.wav",
+      "sha256": "c1cb87be8ba2c8cfb20f549f8ea08dc20c592e6b71de2218d06f566fd23abb07",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_04.wav",
+      "sha256": "a91194bb58d39b4cb4b9f28a44e80029a0271441041cbb6e0f4aaecb7245184a",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_05.wav",
+      "sha256": "eac402ee66eceb09ae2ba14529be55aede5786972f9a5f596e6f0b7f91b957d7",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_06.wav",
+      "sha256": "16e276728db387286472ebeefebe6aa690e6744b11bd8059c95a22ad1218cefc",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_07.wav",
+      "sha256": "0da2f21c79061c541bed1bd1a7480f2e331a78701ed1146594ca92657bc3ccc6",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_08.wav",
+      "sha256": "8c45056530604fcb9df96f14b28a6f61783abebed6d1d06f2496dadccd848133",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_09.wav",
+      "sha256": "714e36cd0c5db053c7d5596022985b681aa023afb9fb3fa36bf3ec2e5903eb19",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\5_10.wav",
+      "sha256": "cc8ec50de5fceffb9bcf901bc98f93e929b22d50e8adf5e1f61fb2face61269a",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_01.wav",
+      "sha256": "b5b786c9ec840fc7b31f444692b2b70e56242ed47e94a341b408768e47697ce7",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_02.wav",
+      "sha256": "df6d58078298849e3d82b52180c62135760f78d283373a47494d20adf536d4cf",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_03.wav",
+      "sha256": "c4338fb687b5ef1cb5c3b98606e4db019c3c22155090a2736c04948aab7261d6",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_04.wav",
+      "sha256": "abfca3bfbea08166a607577de91df912298416c90032123b439dbe44ff4bf46a",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_05.wav",
+      "sha256": "5d74b1282d84b4332207e6d60f327bee8bf4161a8abe2c49cf120d8eab005c3c",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_06.wav",
+      "sha256": "0ea9cb2b8bcc40cacbbf5a1e9703d3ca700d88087fa06b49bdf89dd945e1f593",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_07.wav",
+      "sha256": "ba0050c016f1b289ed8a6c0f4f69644261b6805fa001d4c39221bc4643472dce",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_08.wav",
+      "sha256": "c0a83e55cf17b402f887d9081163dd9716db3f811da7a2e1a38e85370b787b45",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_09.wav",
+      "sha256": "5e86a1c9a8fdf1d345c5dd924a3b1d17a9c8a934100abb8c045e8bc2db859026",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\6_10.wav",
+      "sha256": "60270503fd9a95b26528ab869a07f05cafe8a3d1924943c6a7680d618787e029",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_01.wav",
+      "sha256": "721fe2f1faab5445102bf18324b142dfddf4ae08cbe5ace1d43f5b8d3cd22836",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_02.wav",
+      "sha256": "7468d8cf2b362089bb5ea29e096e4bdef47c2b1e703f8856b15ae9c33a6af1ff",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_03.wav",
+      "sha256": "5ce03cbb91f2cc9a89b5fc2ec37390c26f4026f13f8d0aafa0ce10142852adf6",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_04.wav",
+      "sha256": "fdfdb79e525213ffa830007d8b1c4fa98e8bda249345b22a57f1701c6fc69ffc",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_05.wav",
+      "sha256": "b62f22a01939009ec1c657a18f68860dfb019da80380864047f5079d103a7fff",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_06.wav",
+      "sha256": "6ab5d44d18a5e2499f4c5634d35a85eb7f34f1b14614bd6e3e8102a5a4d8de4e",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_07.wav",
+      "sha256": "ee4db6b03c1c51eb19367a82bd8453bb7a4fe5f86439887fd84bca635f519f94",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_08.wav",
+      "sha256": "37336b38c5da2202375d433b2ea8b986f04311de5ba801af3981b09dd34a21af",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_09.wav",
+      "sha256": "a49920cd6ac747397e34fe0b09234aa32f0185ac6024e416a86d5a0fa352685c",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\7_10.wav",
+      "sha256": "63805910581219f05cb06b4a0b6638c68227ad67820b9e953d7e7188aa2f33eb",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_01.wav",
+      "sha256": "af460b362a621f3e288f555d299c507cd3ab6a1e76ee992980351696b6bb20d1",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_02.wav",
+      "sha256": "c7545d941ed35e3be2c2ec32943ec142645fe458ded49835e05e90c80fbd97db",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_03.wav",
+      "sha256": "7df106f2f3cc671ea3f1ba2b0142e9fd57c7bab3f44a3a5379cf8abbfcb81fc9",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_04.wav",
+      "sha256": "a536e7c6a322dcbf08945119babe96bcf74829b02a67d51e9d467ab3685a0fb7",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_05.wav",
+      "sha256": "27e3a1a20c9443e746ba90f74556108577eb5500dd8b809aecdb44eb027611a9",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_06.wav",
+      "sha256": "84cc6370fde4376a86489ebcd8b12093fa66296f329e5dcc8b6dc7561c3e0e9c",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_07.wav",
+      "sha256": "f0918cd0b314492ea75127bcbd6c2b47f599174d9c77f07e241323bf5bfd76d2",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_08.wav",
+      "sha256": "dadf90964007b999643c9108db8b4c242e1c950199a8d8c990549b9b42f42184",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_09.wav",
+      "sha256": "a03fdf6c446c558e12638751150179d4fa0f51fd22b61e740f1c7cacccec6c08",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\8_10.wav",
+      "sha256": "e7cc189eb39e80ffe7010004b2e2ae3fe67a9f4c87bc341e3681bec40257cb03",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_01.wav",
+      "sha256": "c512e7aa028654bd0bdeecdd9a0e7ccff4121ee9008cbbe59d4e1b081fe68391",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_02.wav",
+      "sha256": "83431df217a85e58dd50f6fdbffdd68bc59404b9504c34233b350717a2a7c8be",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_03.wav",
+      "sha256": "064c62dcb5d2237e41d589262f1896f1317cb4c7d6a44a6e41b6b148eea09157",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_04.wav",
+      "sha256": "745aa9aa6229455f0ab0008152862f53575340b9758f5c4cc66f07bb1a4aebf2",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_05.wav",
+      "sha256": "5ff056e9356314587d2ee1a92118f0050a8398bfd8756844254c74b124bc6770",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_06.wav",
+      "sha256": "5bc2155d588905c1c8608bcce2c38225b525e01b021ef38d3565a1ba782942e0",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_07.wav",
+      "sha256": "a6c89868cc1db03eba6269b59ba08c5091b0f29d760af91d20593e9c53be4017",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_08.wav",
+      "sha256": "af4def9db59b745a3e90a456d9237234fb1511f05621f68f53026c00bf30d89e",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_09.wav",
+      "sha256": "aeedb1b8dcb2a437fd4ac4eee1514ffee844034b653c6f766f4d81b56bec2709",
+      "bytes": 48044
+    },
+    {
+      "path": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\第一部分\\A\\9_10.wav",
+      "sha256": "bdcf851a0711109a982403bac3a0e144217aed71e5e149f5f8c41adefdc4e5e1",
+      "bytes": 48044
+    }
+  ],
+  "runtime": {
+    "name": "python",
+    "version": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "dependencies": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "scikit-learn": "1.7.2",
+      "matplotlib": "3.10.6",
+      "seaborn": "0.13.2"
+    }
+  },
+  "key_parameters": {
+    "split": "每类 01-05 训练，06-10 测试",
+    "frame_ms": 25.0,
+    "hop_ms": 10.0,
+    "endpoint_window": "hamming",
+    "windows": [
+      "rect",
+      "hamming",
+      "hanning"
+    ],
+    "dtw_band_ratio": 0.35,
+    "training_cv": "StratifiedKFold(5, shuffle=True, random_state=42)"
+  },
+  "reproduce_command": "python run_week2.py --full"
+}

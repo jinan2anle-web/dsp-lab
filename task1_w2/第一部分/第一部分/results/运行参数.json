@@ -1,0 +1,15 @@
+{
+  "seed": 42,
+  "mode": "full",
+  "input_directory": "C:\\Users\\jinan2an\\OneDrive\\Desktop\\数字信号处理\\task1_w2\\第一部分\\data\\A",
+  "split": "每类 01-05 训练，06-10 测试",
+  "frame_ms": 25.0,
+  "hop_ms": 10.0,
+  "endpoint_window": "hamming",
+  "compared_windows": [
+    "rect",
+    "hamming",
+    "hanning"
+  ],
+  "elapsed_s": 27.220525400000042
+}

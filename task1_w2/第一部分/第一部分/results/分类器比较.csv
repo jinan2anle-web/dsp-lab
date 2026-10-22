@@ -1,0 +1,5 @@
+﻿classifier,accuracy,macro_f1,fit_time_s,predict_time_s,correct,test_count,train_cv_best_accuracy,selected_params
+KNN,0.52,0.5364452214452214,0.0007206999944173731,0.0006056999991415069,26,50,0.72,"{""model__n_neighbors"": 3, ""model__weights"": ""distance""}"
+SVM,0.48,0.49952380952380954,0.0012567000012495555,0.0004450999986147508,24,50,0.74,"{""model__C"": 1, ""model__gamma"": 1, ""model__kernel"": ""rbf""}"
+DTW_endpoint,0.54,0.5386308136308136,1.8699996871873736e-05,0.9129257000022335,27,50,,"{""band_ratio"": 0.35}"
+DTW_whole_baseline,0.76,0.7525468975468976,2.1899999410379678e-05,15.808106899996346,38,50,,"{""band_ratio"": 0.35}"

@@ -1,0 +1,56 @@
+[
+  {
+    "figure": "raw_q1_digit_waveforms",
+    "conclusion": "100 条录音均为固定 1.5 s，十类真实波形形态可核查",
+    "source": "data/A/*_01.wav",
+    "n": 10
+  },
+  {
+    "figure": "raw_q2_feature_traces",
+    "conclusion": "能量、幅度与过零率提供互补的逐帧描述",
+    "source": "data/A/0_01.wav",
+    "n": 1
+  },
+  {
+    "figure": "raw_q3_feature_pca",
+    "conclusion": "固定长度时域特征存在类间重叠，分类难度不可忽略",
+    "source": "results/时域特征汇总.csv",
+    "n": 100
+  },
+  {
+    "figure": "process_q1_endpoint_detection",
+    "conclusion": "双能量门限仍能定位低幅值样本 4_10 的有效段",
+    "source": "data/A/4_10.wav",
+    "n": 1
+  },
+  {
+    "figure": "process_q2_window_comparison",
+    "conclusion": "三种窗改变能量尺度，但主要时序轮廓一致",
+    "source": "data/A/0_01.wav",
+    "n": 1
+  },
+  {
+    "figure": "process_q3_train_only_cv",
+    "conclusion": "KNN 与 SVM 参数仅由 50 条训练样本五折验证选择",
+    "source": "results/*训练集交叉验证.csv",
+    "n": 50
+  },
+  {
+    "figure": "result_q1_quality_summary",
+    "conclusion": "全量格式一致且无削波，低峰值样本需人工复听",
+    "source": "results/数据质检与端点.csv",
+    "n": 100
+  },
+  {
+    "figure": "result_q2_class_feature_summary",
+    "conclusion": "不同数字在时长、能量与过零率上存在分布差异",
+    "source": "results/时域特征汇总.csv",
+    "n": 100
+  },
+  {
+    "figure": "result_q3_classifier_comparison",
+    "conclusion": "四条流程在同一独立测试集上比较准确率与耗时",
+    "source": "results/分类器比较.csv",
+    "n": 50
+  }
+]
