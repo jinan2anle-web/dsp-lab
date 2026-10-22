@@ -1,0 +1,22 @@
+# 文本统一 LF，避免 Windows/队友机器之间整文件 diff 噪声
+* text=auto eol=lf
+
+# 二进制：不做行尾转换、不做文本 diff
+*.wav   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.pdf   binary
+*.docx  binary
+*.pptx  binary
+*.xlsx  binary
+*.pkl   binary
+
+# 数据表与图：让 git diff 读得懂
+*.csv   text eol=lf
+*.md    text eol=lf
+*.py    text eol=lf
+*.ps1   text eol=lf
+*.json   text eol=lf
+*.svg   text eol=lf

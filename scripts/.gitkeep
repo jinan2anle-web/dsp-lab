@@ -1,0 +1,4 @@
+# 复现入口：一条命令跑完一个实验
+# exp2_mfcc.py      实验二：自写 FFT + MFCC 特征提取
+# exp3_recognize.py 实验三：DTW 模板匹配识别
+# 尚未实现，见 docs/实验二三技术路线.md 的里程碑。
