@@ -5,4 +5,15 @@
 先复制进本包再改，避免第三份变体。
 """
 
-__all__ = ["config", "env"]
+__all__ = [
+    "config",
+    "env",
+    "io_wav",
+    "framing",
+    "fft_radix2",
+    "mfcc",
+    "endpoint",
+    "dtw",
+    "templates",
+    "app",
+]
