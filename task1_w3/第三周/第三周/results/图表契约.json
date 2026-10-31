@@ -1,0 +1,47 @@
+[
+  {
+    "figure": "raw_q1_duration_distribution",
+    "question": "q1",
+    "conclusion": "端点处理改变输入时长分布"
+  },
+  {
+    "figure": "process_q1_preprocessing_cv_test",
+    "question": "q1",
+    "conclusion": "预处理方案需同时核对训练与测试表现"
+  },
+  {
+    "figure": "result_q1_preprocessing_metrics",
+    "question": "q1",
+    "conclusion": "端点段优于整段，预加重无收益"
+  },
+  {
+    "figure": "raw_q2_feature_correlation",
+    "question": "q2",
+    "conclusion": "16维特征存在明显相关结构"
+  },
+  {
+    "figure": "process_q2_feature_ablation",
+    "question": "q2",
+    "conclusion": "特征组合改变训练和测试表现"
+  },
+  {
+    "figure": "result_q2_feature_contribution",
+    "question": "q2",
+    "conclusion": "ZCR最强，三类联合最佳"
+  },
+  {
+    "figure": "raw_q3_sequence_lengths",
+    "question": "q3",
+    "conclusion": "端点后候选段时长存在类别内外差异"
+  },
+  {
+    "figure": "process_q3_dtw_band_tradeoff",
+    "question": "q3",
+    "conclusion": "0.35后准确率平台而耗时继续增加"
+  },
+  {
+    "figure": "result_q3_split_stability",
+    "question": "q3",
+    "conclusion": "固定划分不能替代重复划分稳定性"
+  }
+]

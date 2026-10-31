@@ -1,0 +1,5 @@
+﻿condition,feature_group,train_cv_accuracy,test_accuracy,test_macro_f1,correct,test_count,selected_C
+raw_whole,all_three,0.6399999999999999,0.6,0.5509090909090909,30,50,10.0
+dc_whole,all_three,0.6399999999999999,0.6,0.5509090909090909,30,50,10.0
+dc_endpoint,all_three,0.64,0.64,0.6376184926184926,32,50,100.0
+dc_endpoint_preemphasis,all_three,0.68,0.58,0.5512337662337662,29,50,1.0

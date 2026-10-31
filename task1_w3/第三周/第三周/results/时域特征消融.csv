@@ -1,0 +1,6 @@
+﻿condition,feature_group,feature_count,train_cv_accuracy,test_accuracy,test_macro_f1,correct,test_count,selected_C
+dc_endpoint,energy_only,6,0.44000000000000006,0.32,0.31199388846447673,16,50,1.0
+dc_endpoint,amplitude_only,6,0.48,0.34,0.3172077922077922,17,50,100.0
+dc_endpoint,zcr_only,6,0.5,0.54,0.5110198624904507,27,50,100.0
+dc_endpoint,energy_amplitude,11,0.5,0.5,0.5086285936285936,25,50,100.0
+dc_endpoint,all_three,16,0.64,0.64,0.6376184926184926,32,50,100.0
