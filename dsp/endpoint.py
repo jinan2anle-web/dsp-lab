@@ -32,8 +32,11 @@ def _frame_zcr(fr):
     return np.mean(neg[:, 1:] != neg[:, :-1], axis=1)
 
 
+LOW_HIGH_RATIO = 0.35  # 低门限 = 高门限 × 0.35（0.002 → 0.0007，即 −27 dB / −31.5 dB）
+
+
 def detect(x, fs, *, frame_ms=25.0, hop_ms=10.0, min_len_ms=100.0,
-           high_ratio=0.002, low_ratio=0.0007, zcr_ratio=0.60, dc_remove=True):
+           high_ratio=0.002, low_ratio=None, zcr_ratio=0.60, dc_remove=True):
     """返回语音段的样本下标半开区间 ``(s0, s1)``；找不到返回 ``None``。
 
     阈值全部相对"本句峰值"取，不看绝对电平，100 条录音同一说话人、同一增益，
@@ -41,9 +44,13 @@ def detect(x, fs, *, frame_ms=25.0, hop_ms=10.0, min_len_ms=100.0,
     默认 −27 dB / −31.5 dB：在 100 条全集上扫了 6 档（见 report/tables/
     exp3_endpoint_sweep.csv），这一档的段长中位 0.67 s，最接近人工核对的中位
     语音时长 0.60 s；取 −10 dB 那档会把每个词都砍到只剩响的核（中位 0.27 s）。
-    ``zcr_ratio`` 是清音补充判据（过零率超过全句 60% 分位的低能量帧也算语音）。
+    ``low_ratio`` 默认 ``high_ratio * LOW_HIGH_RATIO``（= 0.0007），门限扫描脚本
+    也走这条换算，保证表里那一档与主结果是同一条件。
+    ``zcr_ratio`` 是清音补充判据（过零率超过全句该分位的低能量帧也算语音）。
     """
     x = np.asarray(x, dtype=np.float64).ravel()
+    if low_ratio is None:
+        low_ratio = high_ratio * LOW_HIGH_RATIO
     if dc_remove and len(x):
         x = x - x.mean()
     win_len = int(round(fs * frame_ms / 1000.0))
@@ -61,7 +68,7 @@ def detect(x, fs, *, frame_ms=25.0, hop_ms=10.0, min_len_ms=100.0,
 
     t_high = high_ratio * peak
     t_low = low_ratio * peak
-    zcr_hi = float(np.percentile(zcr, 60))
+    zcr_hi = float(np.percentile(zcr, 100.0 * zcr_ratio))
 
     voiced = (energy >= t_high) | ((energy >= t_low) & (zcr >= zcr_hi))
     if not voiced.any():

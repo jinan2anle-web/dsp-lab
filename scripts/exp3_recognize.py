@@ -93,17 +93,17 @@ def save_predictions(path, rows):
 
 
 def condition(name, *, use_endpoint=False, normalize="none", n_templates=5, verbose=True):
-    """跑一个条件，返回 (acc, rows)。"""
+    """跑一个条件，返回 (acc, rows, 耗时秒)。"""
     t0 = time.perf_counter()
     train = featurize("train", use_endpoint=use_endpoint, normalize=normalize)
     test = featurize("test", use_endpoint=use_endpoint, normalize=normalize)
     rows = recognize(train, test, n_templates=n_templates, verbose=verbose)
     acc = accuracy(rows)
+    dt = time.perf_counter() - t0
     if verbose:
         n_ok = sum(1 for r in rows if r[4])
-        print(f"[{name}] acc={acc:.3f} ({n_ok}/{len(rows)})  用时 {time.perf_counter()-t0:.1f}s",
-              flush=True)
-    return acc, rows
+        print(f"[{name}] acc={acc:.3f} ({n_ok}/{len(rows)})  用时 {dt:.1f}s", flush=True)
+    return acc, rows, dt
 
 
 def main(argv=None):
@@ -120,9 +120,9 @@ def main(argv=None):
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
 
     if not args.all:
-        acc, rows = condition("main", use_endpoint=args.endpoint,
-                              normalize=args.normalize, n_templates=args.templates,
-                              verbose=verbose)
+        acc, rows, _dt = condition("main", use_endpoint=args.endpoint,
+                                   normalize=args.normalize, n_templates=args.templates,
+                                   verbose=verbose)
         save_predictions(TABLES_DIR / "exp3_predictions.csv", rows)
         save_confusion(TABLES_DIR / "exp3_confusion.csv", confusion(rows))
         print(f"准确率 {acc:.3f}")
@@ -131,33 +131,67 @@ def main(argv=None):
     summary = []
 
     # 主结果：整段 + none + 5 条模板
-    acc, rows = condition("main 整段/none/5模板", verbose=verbose)
-    summary.append(("main", "整段", "none", 5, acc, len(rows)))
+    acc, rows, dt = condition("main 整段/none/5模板", verbose=verbose)
+    summary.append(("main", "整段", "none", 5, acc, len(rows), dt))
     save_predictions(TABLES_DIR / "exp3_predictions.csv", rows)
     save_confusion(TABLES_DIR / "exp3_confusion.csv", confusion(rows))
 
     # 模板数 1 / 3
     for n in (1, 3):
-        acc_n, _ = condition(f"模板数 {n}", n_templates=n, verbose=verbose)
-        summary.append((f"templates_{n}", "整段", "none", n, acc_n, 50))
+        acc_n, _r, dt_n = condition(f"模板数 {n}", n_templates=n, verbose=verbose)
+        summary.append((f"templates_{n}", "整段", "none", n, acc_n, 50, dt_n))
 
     # normalize 消融
-    acc_cmn, _ = condition("normalize=cmn", normalize="cmn", verbose=verbose)
-    summary.append(("normalize_cmn", "整段", "cmn", 5, acc_cmn, 50))
+    acc_cmn, _r, dt_cmn = condition("normalize=cmn", normalize="cmn", verbose=verbose)
+    summary.append(("normalize_cmn", "整段", "cmn", 5, acc_cmn, 50, dt_cmn))
 
     # 端点段消融
-    acc_ep, rows_ep = condition("端点段", use_endpoint=True, verbose=verbose)
-    summary.append(("endpoint", "端点段", "none", 5, acc_ep, 50))
+    acc_ep, rows_ep, dt_ep = condition("端点段", use_endpoint=True, verbose=verbose)
+    summary.append(("endpoint", "端点段", "none", 5, acc_ep, 50, dt_ep))
     save_predictions(TABLES_DIR / "exp3_predictions_endpoint.csv", rows_ep)
     save_confusion(TABLES_DIR / "exp3_confusion_endpoint.csv", confusion(rows_ep))
 
     _write_csv(TABLES_DIR / "exp3_accuracy.csv",
-               ["条件", "输入", "normalize", "模板数", "准确率", "测试条数"],
-               [[n, seg, nz, k, f"{a:.4f}", m] for n, seg, nz, k, a, m in summary])
-    for n, seg, nz, k, a, m in summary:
-        print(f"  {n:16s} 输入={seg:4s} normalize={nz:4s} 模板={k}  acc={a:.3f}", flush=True)
+               ["条件", "输入", "normalize", "模板数", "准确率", "测试条数", "耗时s"],
+               [[n, seg, nz, k, f"{a:.4f}", m, f"{d:.1f}"] for n, seg, nz, k, a, m, d in summary])
+    for n, seg, nz, k, a, m, d in summary:
+        print(f"  {n:16s} 输入={seg:4s} normalize={nz:4s} 模板={k}  acc={a:.3f}  {d:.1f}s", flush=True)
     print("已写 report/tables/exp3_accuracy.csv")
+
+    endpoint_sweep()
     return 0
+
+
+def endpoint_sweep():
+    """扫端点高门限，写 ``report/tables/exp3_endpoint_sweep.csv``（报告表 4 的出处）。
+
+    低门限一律按 ``low = high * endpoint.LOW_HIGH_RATIO``（= 0.35）换算，
+    与 ``endpoint.detect()`` 的默认口径完全相同，否则表里那一档和主结果
+    不是同一个实验条件。
+    """
+    from dsp import endpoint as _ep
+
+    tiers = (0.001, 0.002, 0.003, 0.005, 0.010, 0.020)
+    rows = []
+    for hi in tiers:
+        lo = hi * _ep.LOW_HIGH_RATIO
+        lens = []
+        for p in config.wav_paths():
+            x, fs = io_wav.read_wav(p)
+            seg = _ep.detect(x, fs, high_ratio=hi, low_ratio=lo)
+            lens.append(0.0 if seg is None else (seg[1] - seg[0]) / fs)
+        arr = np.asarray(lens)
+        rows.append([f"{hi:.4f}", f"{lo:.6f}",
+                     f"{10 * np.log10(hi):.1f}", f"{10 * np.log10(lo):.1f}",
+                     f"{np.median(arr):.3f}", f"{np.percentile(arr, 10):.3f}",
+                     f"{np.percentile(arr, 90):.3f}", f"{arr.max():.3f}"])
+        print(f"  门限 {hi:.3f}（{10 * np.log10(hi):.1f} dB）段长中位 {np.median(arr):.3f} s",
+              flush=True)
+
+    _write_csv(TABLES_DIR / "exp3_endpoint_sweep.csv",
+               ["高门限(峰值比例)", "低门限", "高门限(dB)", "低门限(dB)",
+                "段长中位数(s)", "p10(s)", "p90(s)", "最长(s)"], rows)
+    print("已写 report/tables/exp3_endpoint_sweep.csv")
 
 
 if __name__ == "__main__":

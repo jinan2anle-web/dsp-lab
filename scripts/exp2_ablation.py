@@ -120,8 +120,8 @@ def fig_triangles(plt):
     ax.axvline(edges_hz[m0 + 2], color="0.5", lw=0.8, ls=":")
     ax.axvline(edges_hz[m0 + 3], color="0.5", lw=0.8, ls=":")
     for m in (m0, m0 + 1, m0 + 2):
-        ax.annotate(f"$f({m + 1})$={centers[m]:.0f} Hz\n"
-                    f"= {centers[m] * config.NFFT / config.FS:.1f} 号频点",
+        ax.annotate(f"$F_{{{m + 1}}}$={centers[m]:.0f} Hz\n"
+                    f"$b_{{{m + 1}}}$={centers[m] * config.NFFT / config.FS:.1f}",
                     xy=(centers[m], 1.0), xytext=(centers[m], 1.12),
                     ha="center", fontsize=8,
                     arrowprops=dict(arrowstyle="->", lw=0.7))
@@ -129,8 +129,8 @@ def fig_triangles(plt):
     ax.set_ylim(0, 1.3)
     ax.set_xlabel("频率 / Hz")
     ax.set_ylabel("权值")
-    ax.set_title("图 2.2  相邻三个三角滤波器的重叠：$f(m)$ 是频点序号（不是 Hz），"
-                 "相邻两个三角在同一频点上加权之和恰为 1")
+    ax.set_title("图 2.2  $F_m$（Hz）换算成频点坐标 $b_m=N\\cdot F_m/f_s$，重叠段权值和为 1",
+                 fontsize=11)
     ax.legend(fontsize=8, loc="upper right")
     ax.grid(alpha=0.3)
     fig.tight_layout()
@@ -220,9 +220,13 @@ def make_figs():
     print(f"→ 已写 {FIG_DIR}\\fig2_1..2_3")
 
 
-def main():
-    print("实验二 消融（判据 = 下游识别率）：")
-    run_ablation()
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if "--no-ablation" in argv:
+        print("实验二：--no-ablation → 跳过消融表，只出图 2.1–2.3")
+    else:
+        print("实验二 消融（判据 = 下游识别率）：")
+        run_ablation()
     make_figs()
     return 0
 

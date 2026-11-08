@@ -68,22 +68,27 @@ def build(part="train", *, use_endpoint=False, save=True, **mfcc_kwargs):
             + "".join(f"{r[0]},{r[1]},{r[2]},{r[3]},{r[4]}\n" for r in rows),
             encoding="utf-8",
         )
+        # 文件名带 part 前缀：否则先 build("test") 会静默覆盖 build("train") 的模板
         for label, seqs in table.items():
             for k, feat in enumerate(seqs):
-                np.save(TEMPLATE_DIR / f"{label}_{k:02d}.npy", feat)
+                np.save(TEMPLATE_DIR / f"{part}_{label}_{k:02d}.npy", feat)
     return table
 
 
-def load():
+def load(part="train"):
     """读回 `build()` 存下的模板库，返回 ``{label: [mfcc, ...]}``（按文件名序）。"""
     index = TEMPLATE_DIR / "index.csv"
     if not index.exists():
         raise FileNotFoundError(f"{index} 不存在，先跑 templates.build()")
     table = {}
     lines = index.read_text(encoding="utf-8").splitlines()[1:]
-    for i, row in enumerate(lines):
+    for row in lines:
         label = int(row.split(",")[0])
-        table.setdefault(label, []).append(np.load(TEMPLATE_DIR / f"{label}_{len(table.get(label, [])):02d}.npy"))
+        n = len(table.get(label, []))
+        path = TEMPLATE_DIR / f"{part}_{label}_{n:02d}.npy"
+        if not path.exists():
+            raise FileNotFoundError(f"{path} 不存在（模板库可能是别的 part 建的，重跑 templates.build）")
+        table.setdefault(label, []).append(np.load(path))
     return table
 
 

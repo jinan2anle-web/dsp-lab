@@ -53,6 +53,15 @@ def fft_selftest(fh):
         err = float(np.max(np.abs(mine - ref)))
         worst = max(worst, err)
         _p(fh, f"  {name:28s} max|自写 − np.fft| = {err:.3e}")
+
+    # 真实录音的全部帧一次算完（[148, 512]），这才是报告里引用的那条
+    xr, _fsr = io_wav.read_wav(config.wav_paths()[0])
+    fr_all = framing.frames(xr, 400, 160, window="hamming")
+    mine_all = fft_radix2.fft(fr_all, 512)
+    ref_all = np.fft.fft(fr_all, 512)
+    err_all = float(np.max(np.abs(mine_all - ref_all)))
+    worst = max(worst, err_all)
+    _p(fh, f"  {'真实录音全部帧 [148,512]':28s} max|自写 − np.fft| = {err_all:.3e}")
     fh.write("\n")
 
     # 单频点的谱峰位置与幅度
@@ -84,16 +93,23 @@ def fft_selftest(fh):
     fh.write("\n")
     fb = mfcc.mel_filterbank(24, 512, 16000.0, 0.0, 8000.0)
     s = fb.sum(axis=0)
-    inner = s[1:-1]
+    core = s[3:231]
     _p(fh, f"  形状 {fb.shape}（24 个三角 × 257 个频点 = 512/2+1）")
-    _p(fh, f"  逐频点求和：k=1..255 全部为 {inner.min():.6f} ~ {inner.max():.6f}（验收要求恒等于 1）")
-    _p(fh, f"  边界两个频点 k=0 与 k=256 的和是 {s[0]:.6f} / {s[-1]:.6f}——三角滤波器的端点，")
-    _p(fh, "     讲义里 F⁻¹_Mel 的首末三角外沿落在 0 Hz 与 8000 Hz，故这两点权重为 0，属正常。")
+    assert core.min() == 1.0 and core.max() == 1.0, (
+        f"覆盖范围内逐频点权重和必须恒等于 1，实测 {core.min()} ~ {core.max()}")
+    assert s[0] == 0.0 and s[-1] == 0.0, (
+        f"两端频点 k=0 / k=256 必须为 0，实测 {s[0]} / {s[-1]}")
+    _p(fh, f"  逐频点求和：k=3..230 = {core.min():.12f} ~ {core.max():.12f}（判据恒等于 1）→ 通过")
+    _p(fh, f"  两端 k=0 / k=256 = {s[0]:.6f} / {s[-1]:.6f}（判据 0）→ 通过")
+    _p(fh, f"  过渡段：k=1 → {s[1]:.6f}、k=2 → {s[2]:.6f}；k=231 → {s[231]:.6f}、k=255 → {s[255]:.6f}")
+    _p(fh, "     讲义正变换分母等价 1127、逆变换用 1125，两者不互逆（8000 Hz 会还原成")
+    _p(fh, "     8038.95 Hz / 频点 257.25），故在 mel_filterbank 里把首末外沿 clip 到")
+    _p(fh, "     [0, nfft/2]，否则末三角在 k=256 上会残留 0.046 的权重。")
     centers = mfcc.mel_centers(24, 16000.0)
     _p(fh, f"  24 个中心频率 Hz：{' '.join(f'{c:.1f}' for c in centers)}")
     _p(fh, f"  中心频率的最小间隔 {np.min(np.diff(centers)):.1f} Hz（低频密、高频疏，符合 Mel 刻度）")
     fh.write("\n")
-    _p(fh, f"  >>> 本文件最大对拍误差 = {worst:.3e}，判据 1e-10 → {'通过' if worst < 1e-10 else '不通过'}")
+    _p(fh, f"  >>> 本文件最大 FFT 对拍误差 = {worst:.3e}，判据 1e-10 → {'通过' if worst < 1e-10 else '不通过'}")
 
 
 def mfcc_selftest(fh):
@@ -121,10 +137,11 @@ def mfcc_selftest(fh):
         _p(fh, f"    {q.name}  median c0 = {c0s[-1]:.3f}")
     _p(fh, f"  这 10 条 c0 中位数 {np.median(c0s):.3f}，跨条极差 {max(c0s)-min(c0s):.3f}")
     fh.write("\n")
-    _p(fh, "  normalize 两档的形状必须一致，只有数值不同：")
-    for mode in ("none", "cmn"):
+    _p(fh, "  normalize 三档的形状必须一致，只有数值不同：")
+    for mode in ("none", "cmn", "cmvn"):
         m = mfcc.extract(x, fs, normalize=mode)
-        _p(fh, f"    normalize={mode:4s} shape={m.shape} 逐维均值 |mean| 最大 {np.abs(m.mean(0)).max():.3e}")
+        _p(fh, f"    normalize={mode:4s} shape={m.shape} 逐维均值 |mean| 最大 {np.abs(m.mean(0)).max():.3e}"
+                f"  逐维 std 中位 {np.median(m.std(0)):.3e}")
     fh.write("\n")
     _p(fh, "  端点检测口径：返回半开区间 [s0, s1)，单位样本下标")
     for q in config.wav_paths()[:5]:

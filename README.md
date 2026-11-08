@@ -6,10 +6,13 @@
 
 | 实验 | 主题 | 报告 | 状态 |
 | --- | --- | --- | --- |
-| 实验一 | 时域分析 + 孤立字 0–9 识别 | 单独一份 | 已完成算法（第一周 `task1_w1`、第二周 `task1_w2`），报告未成文 |
-| 实验二 | 短时频域分析：自写 FFT + MFCC | **并入实验三报告** | 未开始（MFCC 目前 0 行） |
-| 实验三 | DTW 模板匹配 + 必要的界面 | 实验二 + 三合并一份 | 仅有 DTW 基线 0.760；无 MFCC、无界面 |
+| 实验一 | 时域分析 + 孤立字 0–9 识别 | 单独一份 | 已完成：代码（`task1_w1`/`task1_w2`）＋论文 `task1_w3/基于时域分析技术的孤立数字语音识别.docx` |
+| 实验二 | 短时频域分析：自写 FFT + MFCC | **并入实验三报告** | 已完成：`dsp/fft_radix2.py`、`framing.py`、`mfcc.py`，与 `np.fft` 对拍 2.3e-14；图 2.1/2.2/2.3 与三窗消融已出 |
+| 实验三 | DTW 模板匹配 + 必要的界面 | 实验二 + 三合并一份 | 已完成：`dsp/dtw.py`、`templates.py`、`endpoint.py`、`app.py`；识别率 40/50 = 0.800 |
 | 实验四 | 独立于内容的说话人识别 | 选做、不计期末成绩 | 不做（本组只有一位说话人） |
+
+合并报告：`report/实验二三报告.docx`（13 页，6 图 9 表；数字出处见 `report/tables/traceability.csv`）。
+交接与分工：`docs/实验二三_分工与交接单.docx`，周报：`report/周报/`。
 
 三条容易被忽略的硬要求：
 
@@ -51,6 +54,16 @@
 
 ## 四、怎么跑
 
+一条命令复现报告里的全部数字与图（约 2 分钟，需要 `_env/pylibs` 或已装 requirements）：
+
+```powershell
+& $py -m scripts.run_all          # 自测 + 实验二消融与图 + 实验三识别与消融 + 图 3.x
+& $py -m scripts.run_all --fast   # 跳过消融表，图照出
+& $py -m dsp.app                  # 起界面
+```
+
+单步：`-m scripts.selftest`、`-m scripts.exp2_ablation`、`-m scripts.exp3_recognize --all`、`-m scripts.exp3_figs`。
+
 统一用仓库自带的 python（3.12.14）：
 
 ```powershell
@@ -78,8 +91,8 @@ python -m venv .venv; .venv\Scripts\activate; pip install -r requirements.txt
 
 ```powershell
 & $py -c "import sys; sys.path.insert(0, '.'); from dsp import config as c; print(len(c.wav_paths()))"
-& $py scripts\exp2_mfcc.py      # 实验二（待实现）
-& $py scripts\exp3_recognize.py # 实验三（待实现）
+& $py -m scripts.selftest        # 写 report/evidence/ 三份自测证据
+& $py -m scripts.exp3_recognize  # 主结果，末行打印准确率 0.800
 ```
 
 ## 五、Git
@@ -119,11 +132,17 @@ powershell -ExecutionPolicy Bypass -File .\tools\init_repo.ps1
 - 交上去的 zip 一律由 `git archive` 生成，不再手工复制目录。
 - OneDrive 与 `.git` 同放偶发 `index.lock` 冲突：遇到时先暂停 OneDrive 同步再操作；若频繁发生，把仓库移出 OneDrive。
 
-## 六、待办（按阻断程度排序）
+## 六、当前状态与下一步
 
-1. **修端点**：整段 0.760 / 端点段 0.540，差 22 个点。端点把判别信息剪掉了（均值仅 0.274 s），实验三主线不能被它拖累——定稿一种口径，全仓只留一处实现。
-2. **实验二**：`dsp/fft_radix2.py`（自写，与 `np.fft` 对拍）+ `dsp/mfcc.py`（预加重 → 分帧加窗 → FFT → 谱能量 → Mel 滤波 → log → DCT）。
-3. **实验三**：`dsp/dtw.py` 按教材递推式核对 + `dsp/app.py` 界面 + 端到端一键流程。
-4. **报告**：实验一一份、实验二+三合并一份，均按学术论文格式写。
+已定稿（2026-11-08）：
+
+1. **实验二**：自写 radix-2 FFT（与 `np.fft` 最大误差 2.3e-14）、分帧 400/160（1.5 s → 148 帧）、24 个 Mel 三角（覆盖范围内逐频点权重和恒为 1、两端为 0）、13 维 MFCC 含 c0；三窗 × 预加重消融全部落在 0.780–0.800。
+2. **实验三**：DTW 三条前驱、K=13、越界 +inf；每类 5 条模板取最小距离，测试 50 条 **40/50 = 0.800**；模板数 1/3/5 → 0.600/0.740/0.800；CMN 0.820；端点段识别率不变而判决时间 12.6 → 2.5 s。
+3. **报告**：`report/实验二三报告.docx` 13 页 6 图 9 表，每个数字可在 `report/tables/traceability.csv` 查到出处。
+4. **界面**：`python -m dsp.app`，左侧 100 条录音、右侧波形 + 端点段 + MFCC 热图 + 各类最近模板距离。
+
+下一步（第五周）：按 `docs/大纲.md` 与 `docs/第五周_工作分配方案.md` 做频域特征扩展实验；实验一论文已收（`task1_w3/`）。
+
+**实验一 0.760 的口径（已在本仓复现）**：用 `task1_w2/第一部分/接口冻结_1/speech_time_domain.py` 的 `time_domain_feature(...)` + `DTWClassifier(band_ratio=0.35)` 在整段 1.5 s 录音上跑 5 条模板，`normalize=True` 得 38/50 = 0.760、`normalize=False` 得 20/50 = 0.400；把约束带放到 1.00，两个结果都不变、只是耗时从 32.8 s 升到 57.8 s。可见 0.760 与 0.400 的差距完全由**段内逐维归一化**决定，约束带只影响耗时；引用 0.760 必须同时写明「归一化 + band 0.35」两个前提，不能与本次 0.800 直接比大小。注意别用 `task1_w2/第二部分/frame_sequences.pkl` 做这个对照——那份缓存是「端点段 + 已归一化」的数据，拿它跑只会得 0.400。
 
 详细模块边界与里程碑见 [docs/实验二三技术路线.md](docs/实验二三技术路线.md)。

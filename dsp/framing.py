@@ -21,6 +21,9 @@ def window(n, kind="hamming"):
     n = int(n)
     if n <= 0:
         raise ValueError("窗长必须为正")
+    if n == 1:
+        # N−1 = 0 会让 2πn/(N−1) 除零、算出 NaN，单点窗按 1 处理
+        return np.ones(1, dtype=np.float64)
     kind = kind.lower()
     if kind in ("rect", "rectangle", "boxcar"):
         return np.ones(n, dtype=np.float64)
@@ -44,7 +47,7 @@ def preemph(x, alpha=0.97):
 
 
 def num_frames(n_samples, win_len=400, hop_len=160):
-    """左对齐不补零时的帧数。"""
+    """左对齐帧数；n_samples < win_len 时按「补零成一帧」返回 1（与 frames 一致）。"""
     if n_samples < win_len:
         return 1
     return 1 + (n_samples - win_len) // hop_len
@@ -54,13 +57,14 @@ def frames(x, win_len=400, hop_len=160, window="hamming", preemph=0.97):
     """把一维信号切成 ``[T, win_len]`` 的帧矩阵（每帧已乘窗）。
 
     preemph 在**分帧之前**对整条信号做（标准做法：先预加重再分帧并不改变结果，
-    因为 y[n] 只依赖相邻两点，跨帧边界也是连续的）。
+    因为 y[n] 只依赖相邻两点，跨帧边界也是连续的）。补零必须先于预加重，否则
+    空输入会在 ``y[0] = x[0]`` 处越界。
     """
     x = np.asarray(x, dtype=np.float64).ravel()
+    if len(x) < win_len:
+        x = np.pad(x, (0, win_len - len(x)))  # 短信号（含空输入）补零成一帧
     if preemph:
         x = _preemph(x, preemph)
-    if len(x) < win_len:
-        x = np.pad(x, (0, win_len - len(x)))  # 短信号补零成一帧
     n = num_frames(len(x), win_len, hop_len)
     idx = np.arange(win_len)[None, :] + hop_len * np.arange(n)[:, None]
     return x[idx] * _win(win_len, window)

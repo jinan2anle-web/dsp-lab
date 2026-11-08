@@ -40,9 +40,14 @@ TRACE = [
      "python -m scripts.selftest"),
     ("148 帧 / [T,13] 形状", "report/evidence/exp2_fft_selftest.txt; report/evidence/exp2_mfcc_shape.txt",
      "python -m scripts.selftest"),
-    ("Σ_m H_m(k) 恒为 1", "report/evidence/exp2_fft_selftest.txt", "python -m scripts.selftest"),
+    ("覆盖范围内 Σ_m H_m(k) = 1（k=3…230）", "report/evidence/exp2_fft_selftest.txt",
+     "python -m scripts.selftest"),
     ("三窗 × 预加重的识别率", "report/tables/exp2_ablation.csv", "python -m scripts.exp2_ablation"),
     ("DTW 3×3 手算表", "report/evidence/exp3_dtw_handcalc.txt", "python -m scripts.selftest"),
+    ("端点门限扫描（表 4）", "report/tables/exp3_endpoint_sweep.csv",
+     "python -m scripts.exp3_recognize --all"),
+    ("各条件耗时（表 6 注）", "report/tables/exp3_accuracy.csv（耗时s 列）",
+     "python -m scripts.exp3_recognize --all"),
     ("主结果识别率 40/50", "report/tables/exp3_accuracy.csv; report/tables/exp3_predictions.csv",
      "python -m scripts.exp3_recognize --all"),
     ("混淆矩阵", "report/tables/exp3_confusion.csv", "python -m scripts.exp3_recognize --all"),
@@ -83,8 +88,9 @@ def main(argv=None):
     log = []
     for desc, cmd, skip_flags in STEPS:
         if fast and "--no-ablation" in skip_flags and "exp2_ablation" in cmd:
-            print(f"\n== 跳过（--fast）：{desc}")
-            continue
+            # --fast 只跳过消融表，图 2.1–2.3 照出（图也在这一步的 make_figs 里）
+            cmd = cmd + ["--no-ablation"]
+            print(f"\n== --fast：{desc}（跳过消融表，图照出）")
         print(f"\n================ {desc}")
         code, dt = run(cmd)
         log.append((desc, code, round(dt, 1)))
@@ -99,8 +105,13 @@ def main(argv=None):
             fh.write(f"[{code}] {dt:>6.1f}s  {desc}\n")
     print(f"\n→ 已写 {EVIDENCE_DIR / 'run_all.log'}")
 
-    write_traceability(TRACE)
-    return 0 if all(c == 0 for _, c, _ in log) else 1
+    ok = len(log) == len(STEPS) and all(c == 0 for _, c, _ in log)
+    if ok:
+        write_traceability(TRACE)
+    else:
+        print("!! 有步骤没跑完或失败：本次不写 traceability.csv，"
+              "否则会把未生成的产物登记成「有出处」。")
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

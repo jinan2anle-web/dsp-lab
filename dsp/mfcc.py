@@ -62,6 +62,11 @@ def mel_filterbank(n_mels=24, nfft=512, fs=16000.0, f_low=0.0, f_high=None):
     # 含两端点共 n_mels+2 个频率，其中 1..M 是峰，0 与 M+1 是外侧零点
     edges_hz = mel_to_hz(lo + np.arange(n_mels + 2) * step)
     edges_bin = edges_hz * nfft / float(fs)
+    # 讲义正变换用 2595·lg(1+f/700)（分母等价 1127），逆变换用 700(e^{b/1125}−1)，
+    # 两者不互逆：f_high=8000 会还原成 8038.95 Hz（频点 257.25），末端三角在
+    # k=256 上还剩 0.046 的权重。把首末外沿钉在覆盖范围的边界频点上，使
+    # 「覆盖范围内 Σ_m H_m(k) = 1、两端为 0」这条口径精确成立。
+    edges_bin = np.clip(edges_bin, 0.0, nfft / 2.0)
 
     n_bins = nfft // 2 + 1
     k = np.arange(n_bins, dtype=np.float64)

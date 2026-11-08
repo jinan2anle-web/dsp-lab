@@ -1,6 +1,6 @@
-条件,输入,normalize,模板数,准确率,测试条数
-main,整段,none,5,0.8000,50
-templates_1,整段,none,1,0.6000,50
-templates_3,整段,none,3,0.7400,50
-normalize_cmn,整段,cmn,5,0.8200,50
-endpoint,端点段,none,5,0.8000,50
+条件,输入,normalize,模板数,准确率,测试条数,耗时s
+main,整段,none,5,0.8000,50,28.4
+templates_1,整段,none,1,0.6000,50,8.0
+templates_3,整段,none,3,0.7400,50,20.5
+normalize_cmn,整段,cmn,5,0.8200,50,31.9
+endpoint,端点段,none,5,0.8000,50,7.5
