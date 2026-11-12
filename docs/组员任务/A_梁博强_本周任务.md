@@ -6,11 +6,11 @@
 ## 0 先做这三步（10 分钟）
 
 ```bash
-python -m scripts.selftest           # 看到「通过」
-python -m scripts.run_all --fast     # 约 40 秒，确认图能出
+python -m scripts.selftest           # 看到「通过」（只要有 numpy 就能跑）
+python -m scripts.exp3_figs --help   # 可选：出图步骤需要 matplotlib，装不上看 README 末节兜底
 ```
 
-跑完先看 `report/fig/fig2_3_mfcc_flow.png`——你这周要出的两张图，风格要跟它一致（同一套字号、同一套配色、300 dpi）。
+跑完先看 `report/fig/fig2_3_mfcc_flow.png`——你这周要出的两张图，风格尽量跟它一致（标题 11pt 左右、网格淡灰、300 dpi）。
 
 ## 1 任务一：`scripts/exp2_freq_figs.py`（出图 2.4 / 2.5）
 
@@ -28,7 +28,7 @@ python -m scripts.run_all --fast     # 约 40 秒，确认图能出
 - 必须在图上体现：**预加重把高频抬起来**——画"预加重前 / 预加重后"两组曲线（可以每帧两条线，或 2×3 子图）。
 - 验收：能指出同一帧预加重前后在 4–8 kHz 的差。
 
-**写法建议**：直接抄 `scripts/exp2_ablation.py` 的骨架（`_setup_matplotlib()` 选字体、`FIG_DIR`、`savefig(..., dpi=300, bbox_inches="tight")`），别另起一套。
+**写法建议**：直接抄 `scripts/exp2_ablation.py` 的骨架（`_setup_matplotlib()` **只负责挑中文字体**，字号/配色要自己设；现有三处 `savefig` 都是 `dpi=300`、**没有** `bbox_inches` 参数）。跑法：`python -m scripts.exp2_freq_figs`（`scripts/__init__.py` 会自动注入依赖路径）；**不要改 `scripts/run_all.py`**，集成由 C 做。
 
 自测输出写到 `report/evidence/exp2_freq_figs.txt`：图的两条尺寸、三个帧号、每帧能量最大值。
 
@@ -45,7 +45,12 @@ extract(x, fs=16000.0, *, n_mfcc=13, n_mels=24, nfft=512, win_len=400, hop_len=1
 - `use_delta=True` 且 `form="mfcc"` → `[T, 39]`，顺序固定：静态 13 在前、Δ 13 居中、ΔΔ 13 在后。
 - **不许改默认值和位置参数**，否则全仓 20 多处调用全炸。
 
-自测写进 selftest 或单测脚本：`extract(x, form="logmel").shape == (148, 24)`、`extract(x, use_delta=True).shape == (148, 39)`、默认调用结果与改动前**逐字节相同**（把改前的 `[148,13]` 存一份 npy 对比，`np.array_equal`）。
+自测单独写一个脚本 `scripts/exp2_selftest_extra.py`（**允许你新建的第 4 个文件**，不要改公共的 `scripts/selftest.py`），断言：
+
+- `extract(x, form="logmel").shape == (148, 24)`
+- `extract(x, use_delta=True).shape == (148, 39)`
+- 默认调用与改动前一致：先 `np.savez` 到临时目录存一份现值、再改代码、再读回，`np.array_equal` 必须为 True（**不要依赖把 npy 入库**，`*.npy` 是 gitignore 的）
+- Δ/ΔΔ 的口径（**本周新定，照这个实现**）：`Δ[t] = c[t] − c[t−1]`，`ΔΔ[t] = Δ[t] − Δ[t−1]`；`t=0` 时用前向差分补齐（`c[1]−c[0]`），保证输出仍 `[T,13]`；拼接顺序 `[静态13 | Δ13 | ΔΔ13]`。自测里贴一组数值：`x=0_01.wav` 的 `c[0,0]`、`Δ[0,0]`、`ΔΔ[0,0]`。
 
 ## 3 任务三：`dsp/augment.py`（新文件，B 要用它跑测试实验）
 
@@ -59,6 +64,9 @@ apply_gain(x, factor)                           -> np.ndarray   # 整条乘常�
 - `apply_gain`：`x * factor`，长度不变。
 - 自测（写 `report/evidence/exp2_augment.txt`）：实测 SNR 与设定值的偏差（用 `10*log10(P_s/P_n)` 复算，20/10/5 dB 三档各一条，偏差必须 < 0.5 dB）；`apply_gain` 前后 `np.abs(x).mean()` 的比值等于 `factor`。
 
+- **`detect()` 返回 None 时的口径**（`dsp/endpoint.py:47` 有 4 条 `return None`）：退化为「整条均方值」当 `P_s`，在 txt 里记一行 `fallback_to_whole_file = N 条`；100 条里正常应为 0 次。
+- 噪声功率公式写进 docstring，B 会照抄核对。
+
 ## 4 验收（周日逐条打勾）
 
 - [ ] 图 2.4 有静音区/起点/终点标注，横轴秒、纵轴 Hz，300 dpi
@@ -66,7 +74,7 @@ apply_gain(x, factor)                           -> np.ndarray   # 整条乘常�
 - [ ] `extract(form="logmel")` → `[148,24]`；`use_delta=True` → `[148,39]`；默认输出不变
 - [ ] `add_white_noise` 实测 SNR 偏差 < 0.5 dB（三档）
 - [ ] `apply_gain` 前后均值比等于 factor
-- [ ] 四个自测 txt 都在 `report/evidence/`
+- [ ] 四个自测 txt 都在 `report/evidence/`：`exp2_freq_figs.txt`、`exp2_mfcc_logmel.txt`、`exp2_augment.txt`、`exp2_selftest_extra.txt`
 - [ ] 提交信息前缀是 `exp2:`，正文带关键数字
 
 ## 5 你的接口边界（别越界）

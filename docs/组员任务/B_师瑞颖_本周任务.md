@@ -11,7 +11,10 @@ python -m scripts.exp3_recognize --all     # 约 2 分钟，产出基线识别�
 python -m scripts.run_all --fast           # 约 40 秒，确认图能出
 ```
 
-基线必须对得上：主结果 **40/50 = 0.800**、模板 1/3/5 → **0.600/0.740/0.800**、CMN → **0.820**、端点段 → **0.800（7.5 s）**。对不上先别往下做，先查环境。
+基线必须对得上：主结果 **40/50 = 0.800**、模板 1/3/5 → **0.600/0.740/0.800**、CMN → **0.820**、端点段 → **0.800**。对不上先别往下做，先查环境。
+
+> 耗时列**不要**跟表里逐位比：同一条件在不同机器/负载下能差 ±50%（我本机测到过 12.6 s / 23.2 s / 28.4 s）。只有识别率与条数必须完全一致。
+> 跑之前先把 `report/` 复制一份备份——`selftest` 与 `exp3_recognize` 会**静默覆写** `report/evidence/*.txt`、`report/tables/exp3_predictions.csv` 等。
 
 ## 1 任务一：`scripts/exp2_freq_ablation.py` → `report/tables/exp2_freq_ablation.csv`
 
@@ -26,9 +29,9 @@ python -m scripts.run_all --fast           # 约 40 秒，确认图能出
 | Mel 数 32 | `n_mels` | `extract(x, n_mels=32)` |
 | 无 DCT（log-Mel） | `form="logmel"` | 24 维直接进 DTW（等 A 的 `form` 参数，见交接点） |
 | 加 Δ/ΔΔ | `use_delta=True` | 39 维（等 A 的 `use_delta`） |
-| 不用预加重 | `preemph=0.0` | 与已有 `exp2_ablation.csv` 的 0.00 行区别是这里同时固定 hamming |
+| MFCC 20 维 | `n_mfcc=20` | `extract(x, n_mfcc=20)`（`n_mels` 仍 24） |
 
-csv 列：`条件,参数,识别率,正确条数,总条数,耗时s,说明`
+csv 列（与 `docs/测试实验设计.md` 第 4 节一致）：`条件,参数,识别率,正确条数,总条数,耗时s,备注`
 
 > 注意：3、4、5 行依赖 A 的两个新参数，A 周三晚交付。**没交付就先跑 1、2、6 三行**，别干等；缺的行在 csv 里留空并写"待 A 交付"。
 
@@ -36,7 +39,7 @@ csv 列：`条件,参数,识别率,正确条数,总条数,耗时s,说明`
 
 用途：回答"同样条件下，频域特征比时域强多少"。
 
-| 特征 | 维数 | 归一化 | 约束带 | 识别率 | 正确/50 | 说明 |
+| 特征 | 维数 | 归一化 | 约束带 | 识别率 | 正确条数 | 备注 |
 |---|---|---|---|---|---|---|
 | 时域 `[T,3]` 逐帧 | 3 | 段内逐维归一化 | band 0.35 | 0.760 | 38/50 | 实验一原流程（必须写这条口径） |
 | 时域 `[T,3]` 逐帧 | 3 | 无 | 无 | 0.400 | 20/50 | 去掉归一化就掉到 0.400 |
@@ -44,6 +47,7 @@ csv 列：`条件,参数,识别率,正确条数,总条数,耗时s,说明`
 | MFCC `[T,13]` | 13 | CMN | 无 | 0.820 | 41/50 | 加归一化只多 1 条 |
 
 - 时域两行用包里自带的 `参考_实验一原代码/speech_time_domain.py` 的 `read_wav` + `time_domain_feature(normalize=...)` + `DTWClassifier(band_ratio=...)`，**整段 1.5 s**输入（用法见 `参考_实验一原代码/README.md`）。
+- **量纲注意**：这个参考模块的 `read_wav` 返回**未归一化的原始 16 bit 数值**（`0_01.wav` 的 `absmax=32032`），而包内 `dsp/io_wav.read_wav` 返回 −1…1。时域两行必须用它自己的 `read_wav`，别混用，否则 0.760/0.400 对不上。
 - 表注必须写全三条：①实验一的 0.760 依赖段内逐维归一化（去掉即 0.400）；②band 0.35→1.00 准确率不变、只是耗时 15.90→27.21 s；③本实验无归一化、无约束带，所以 0.800 与 0.760 只作定性对照，不算"高 2 条"。
 - **别用 `task1_w2/第二部分/frame_sequences.pkl` 做对照**——那是"端点段 + 已归一化"的缓存，跑出来只有 0.400，会得出错误结论。
 
@@ -53,10 +57,22 @@ csv 列：`条件,参数,识别率,正确条数,总条数,耗时s,说明`
 
 **T1 噪声**：SNR ∈ {∞, 20, 10, 5, 0} dB × seed ∈ {0,1,2}，共 15 行。
 
+**前置依赖**：`dsp/augment.py` 由 A 周三晚交付，**包里现在没有这个文件**（已验证 `ModuleNotFoundError`）。他交付前你先做任务一、二、四。
+
 ```python
-from dsp.augment import add_white_noise          # A 周三晚交付
+from dsp.augment import add_white_noise          # A 周三晚交付后才可用
 x = add_white_noise(x0, snr_db, seed=seed)       # 内部按语音段功率定噪声
 feats = mfcc.extract(x)                          # 其余参数全部用默认
+```
+
+拿到他的实现后，**先自己核一遍 SNR**（3 行，不然跑完 750 次才发现口径错就白跑了）：
+
+```python
+import numpy as np
+P_s = np.mean(x0[5600:23760] ** 2)               # 语音段（可按端点段替换）
+x1  = add_white_noise(x0, 10.0, seed=0)
+snr = 10 * np.log10(P_s / np.mean((x1 - x0) ** 2))
+assert abs(snr - 10.0) < 0.5, snr                # 偏差超过 0.5 dB 就打回
 ```
 
 **T2 增益**：factor ∈ {0.5, 1.0, 2.0} × normalize ∈ {none, cmn}，共 6 行。用 `apply_gain(x0, factor)`，加完再 `extract(..., normalize=...)`。
@@ -67,8 +83,8 @@ csv 列（与设计文档第 4 节一致）：
 实验,条件,参数,重复次数,识别率,正确条数,总条数,耗时s,seed,备注
 ```
 
-- `实验` ∈ {`T1_noise`,`T2_gain`}；`条件` 用中文标签（`SNR 10 dB` / `gain ×2.0 / cmn`）。
-- 噪声 15 行按 seed 分行保留，另外在 `说明` 里写「3 次平均 ± 极差」。
+- `实验` ∈ {`T1_noise`,`T2_gain`}；`条件` 写全中文标签（`SNR 10 dB` / `gain ×2.0 / cmn`），`参数` 只放一个机器可读数值（`10` / `2.0`）。
+- 噪声 15 行按 seed 分行保留，另补一行 `seed=avg` 写「3 次平均 ± 极差」；统一用「备注」，不写「说明」。
 - T2 **必须同时给 none 与 cmn**——这一实验要验证的正是"整体增益只让 c0 平移，CMN 能消掉"这个推论。
 
 **写报告时对照预期**（设计文档第 3 节已写死）：20 dB 基本不掉、10 dB 掉 1–3 条、0 dB 接近随机；T2 的 `none` 掉、`cmn` 不掉。**不符合预期就如实写并解释**，这比符合预期更有价值。
@@ -80,6 +96,10 @@ csv 列（与设计文档第 4 节一致）：
 ```
 模板数,识别率,正确条数,总条数,耗时s
 ```
+
+（四张表的共同三列一律叫 `识别率` / `正确条数` / `总条数`，别写成「准确率」或「正确/50」；完整列定义见 `docs/测试实验设计.md` 第 4 节。）
+
+``````
 
 1/3/5 三行应与现有 `exp3_accuracy.csv` 完全一致（0.600/0.740/0.800），不一致说明取模板的方式不同，先查再交。
 
@@ -98,13 +118,13 @@ csv 列（与设计文档第 4 节一致）：
 - [ ] `exp4_timedomain_vs_freq.csv` 4 行齐全，表注三条前提写全
 - [ ] `exp5_robustness.csv` 噪声 15 行 + 增益 6 行，`seed` 列有值
 - [ ] `exp3_template_curve.csv` 5 行，与旧表 1/3/5 对齐
-- [ ] 四张表都能用**一条命令**重跑（把命令写在 csv 同名 `.txt` 或脚本头部注释里）
+- [ ] 四张表都能用**一条命令**重跑：`python -m scripts.exp2_freq_ablation` / `python -m scripts.exp5_robustness` / `python -m scripts.exp3_template_curve`（命令写在脚本头部注释里）
 - [ ] 每条结论都用"条数"说话（1 条 = 2 个百分点），差 ≤1 条写"无差别"
 - [ ] 提交信息前缀 `exp5:` / `exp3:`，正文带关键数字
 
 ## 7 你的接口边界
 
-- 只改/新建：`scripts/exp2_freq_ablation.py`、`scripts/exp5_robustness.py`、四张 csv。
+- 只改/新建：`scripts/exp2_freq_ablation.py`、`scripts/exp5_robustness.py`、`scripts/exp3_template_curve.py`、四张 csv。
 - 不改：`dsp/*`（A 和 C 的地盘）、`scripts/run_all.py`（C）、`report/实验二三报告.md`（C）。
 - 需要新参数就找 C 冻结，别自己往 `mfcc.py` 里塞。
 
@@ -113,7 +133,7 @@ csv 列（与设计文档第 4 节一致）：
 1. 耗时只有单次值、波动可达 ±50% → 报"同一次运行的整组数"，别跨次拼。
 2. CMN 下的 0.820 与 none 下的 0.800 只差 1 条 → 只能写"无显著差别"，不能写"CMN 更好"。
 3. `0 dB` 那档如果识别率异常高（>0.30），先怀疑噪声没加进去：自查 `10*log10(P_s/P_n)`。
-4. 中文方块 → 抄 `_scripts/exp2_ablation.py` 的 `_setup_matplotlib()`。
+4. 中文方块 → 抄 `scripts/exp2_ablation.py` 的 `_setup_matplotlib()`。
 5. 脚本必须能 `python -m scripts.xxx` 跑（`scripts/__init__.py` 已处理依赖注入）。
 
 ## 9 交付
