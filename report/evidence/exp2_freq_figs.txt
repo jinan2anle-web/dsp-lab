@@ -1,0 +1,18 @@
+实验二频域图证据
+source = 0_01.wav
+spectrogram_matrix = (148, 257)
+fig2_4_pixels = 2700 x 1440
+fig2_5_pixels = 3900 x 1260
+endpoint_samples = [5600, 23760)
+endpoint_seconds = [0.350000, 1.485000)
+color_limits_db = [-90.0, 25.0]
+frame_ids = (5, 40, 95)
+frame_5_max_energy_raw = 1.711869006490e-07
+frame_5_max_energy_preemph = 6.406785169497e-07
+frame_5_4_8k_lift_db = 5.058816
+frame_40_max_energy_raw = 2.976587048896e+02
+frame_40_max_energy_preemph = 1.885924109728e+02
+frame_40_4_8k_lift_db = 4.261459
+frame_95_max_energy_raw = 1.737913118958e-01
+frame_95_max_energy_preemph = 5.840037894902e-03
+frame_95_4_8k_lift_db = 4.747693

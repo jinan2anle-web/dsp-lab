@@ -1,0 +1,9 @@
+实验二 MFCC 新接口自测
+default_shape = (148, 13)
+logmel_shape = (148, 24)
+delta_shape = (148, 39)
+default_equals_explicit_mfcc = True
+default_equals_saved_prechange = False
+c[0,0] = -113.066661122598191
+delta[0,0] = -1.211958829617245
+delta2[0,0] = 0.000000000000000

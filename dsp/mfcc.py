@@ -115,11 +115,43 @@ def from_frames(fr, *, n_mfcc=13, n_mels=24, nfft=512, fs=16000.0,
 
 def extract(x, fs=16000.0, *, n_mfcc=13, n_mels=24, nfft=512,
             win_len=400, hop_len=160, window="hamming", preemph=0.97,
-            f_low=0.0, f_high=None, normalize="none"):
-    """原始采样 ``x`` → MFCC ``[T, n_mfcc]``（六步一条龙）。"""
+            f_low=0.0, f_high=None, normalize="none", form="mfcc",
+            use_delta=False):
+    """原始采样 ``x`` → MFCC 或对数 Mel 特征。
+
+    ``form="mfcc"`` 保持原有六步流程并返回 ``[T, n_mfcc]``；
+    ``form="logmel"`` 在 DCT 前返回 ``[T, n_mels]``。启用 ``use_delta`` 时，
+    仅对 MFCC 按 ``[静态 | Δ | ΔΔ]`` 拼接，其中
+    ``Δ[t]=c[t]-c[t-1]``，首帧用 ``c[1]-c[0]`` 前向补齐。
+    """
     fr = framing.frames(x, win_len, hop_len, window, preemph)
-    return from_frames(fr, n_mfcc=n_mfcc, n_mels=n_mels, nfft=nfft, fs=fs,
-                       f_low=f_low, f_high=f_high, normalize=normalize)
+    form = str(form).lower()
+    if form == "mfcc":
+        feat = from_frames(fr, n_mfcc=n_mfcc, n_mels=n_mels, nfft=nfft, fs=fs,
+                           f_low=f_low, f_high=f_high, normalize=normalize)
+        if use_delta:
+            delta = _difference(feat)
+            delta2 = _difference(delta)
+            feat = np.concatenate((feat, delta, delta2), axis=1)
+        return feat
+    if form == "logmel":
+        if use_delta:
+            raise ValueError('use_delta=True 仅支持 form="mfcc"')
+        s = mel_spectrum(fr, n_mels, nfft, fs, f_low, f_high)
+        return _normalize(np.log(s + EPS), normalize)
+    raise ValueError(f"未知 form 口径：{form}")
+
+
+def _difference(feat):
+    """一阶帧差分，首帧用前向差分补齐，输出长度不变。"""
+    feat = np.asarray(feat, dtype=np.float64)
+    out = np.empty_like(feat)
+    if len(feat) <= 1:
+        out.fill(0.0)
+        return out
+    out[0] = feat[1] - feat[0]
+    out[1:] = feat[1:] - feat[:-1]
+    return out
 
 
 def _normalize(mfcc, mode):

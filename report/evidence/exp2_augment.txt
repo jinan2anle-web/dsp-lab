@@ -1,0 +1,9 @@
+实验二扰动工具自测
+target_snr_db=20.0, measured_snr_db=20.044932, error_db=+0.044932
+target_snr_db=10.0, measured_snr_db=10.044932, error_db=+0.044932
+target_snr_db=5.0, measured_snr_db=5.044932, error_db=+0.044932
+gain_factor=0.5, abs_mean_ratio=0.500000000000
+gain_factor=1.5, abs_mean_ratio=1.500000000000
+gain_factor=2.0, abs_mean_ratio=2.000000000000
+fallback_to_whole_file = 0 条
+snr_inf_returns_original = True
