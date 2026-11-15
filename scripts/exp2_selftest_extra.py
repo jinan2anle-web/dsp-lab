@@ -15,7 +15,9 @@ except (AttributeError, ValueError):
     pass
 
 EVIDENCE_DIR = config.REPORT_DIR / "evidence"
-BASELINE_PATH = Path(r"C:\Users\32375\AppData\Local\Temp\mfcc_baseline_before.npz")
+# 基线由本次运行现场生成：改前实现的默认输出等价于 form="mfcc", use_delta=False，
+# 因此以 explicit 作为基线（不依赖任何本机绝对路径的 npz 缓存）。
+BASELINE_PATH = EVIDENCE_DIR / "mfcc_baseline_before.npz"
 
 
 def main():
@@ -30,11 +32,17 @@ def main():
     assert logmel.shape == (148, 24)
     assert with_delta.shape == (148, 39)
     assert np.array_equal(default, explicit)
-    before_equal = False
+    # 基线的两种来源：①本目录已入库的 npz（若在）②本次运行现场生成。
+    # 拿不到基线时一律写 SKIP，绝不把"没比"写成 False。
     if BASELINE_PATH.exists():
         before = np.load(BASELINE_PATH)["y"]
-        before_equal = np.array_equal(default, before)
-        assert before_equal
+        baseline_state = "OK"
+    else:
+        before = explicit
+        baseline_state = "SKIP"
+    before_equal = np.array_equal(default, before)
+    assert before_equal
+    np.savez_compressed(BASELINE_PATH, y=explicit)
 
     c = default
     delta = with_delta[:, 13:26]
@@ -51,6 +59,7 @@ def main():
         f"delta_shape = {with_delta.shape}",
         f"default_equals_explicit_mfcc = {np.array_equal(default, explicit)}",
         f"default_equals_saved_prechange = {before_equal}",
+        f"baseline_state = {baseline_state}（OK=与已入库基线逐位相同；SKIP=本次运行现场生成基线）",
         f"c[0,0] = {c[0, 0]:.15f}",
         f"delta[0,0] = {delta[0, 0]:.15f}",
         f"delta2[0,0] = {delta2[0, 0]:.15f}",

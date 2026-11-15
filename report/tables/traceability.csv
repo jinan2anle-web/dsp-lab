@@ -6,7 +6,7 @@ FFT 与 np.fft 的最大误差,report/evidence/exp2_fft_selftest.txt,python -m s
 图 2.4 语谱图（0_01.wav，帧 5/40/95）,report/fig/fig2_4_spectrogram.png,python -m scripts.exp2_freq_figs
 图 2.5 功率谱（三帧 × 4–8 kHz 抬升）,report/fig/fig2_5_power_spectrum.png,python -m scripts.exp2_freq_figs
 频域变体消融（Mel 16/32、log-Mel、ΔΔ、20 维）,report/tables/exp2_freq_ablation.csv,python -m scripts.exp2_freq_ablation
-"时域 [T,3] vs 频域 MFCC [T,13] 同条件对照",report/tables/exp4_timedomain_vs_freq.csv,python -m scripts.exp4_timedomain_vs_freq
+"时域 [T,3] vs 频域 MFCC [T,13] 同条件对照",report/tables/exp4_timedomain_vs_freq.csv,"python -m scripts.exp4_timedomain_vs_freq（频域两行读 exp3_accuracy.csv，需先跑 python -m scripts.exp3_recognize --all）"
 鲁棒性 T1 噪声（SNR ∞/20/10/5/0 dB × seed 0–2）与 T2 增益（×0.5/1.0/2.0 × none/cmn）,report/tables/exp5_robustness.csv,python -m scripts.exp5_robustness
 DTW 3×3 手算表,report/evidence/exp3_dtw_handcalc.txt,python -m scripts.selftest
 端点门限扫描（表 5）,report/tables/exp3_endpoint_sweep.csv,python -m scripts.exp3_recognize --all
@@ -16,5 +16,5 @@ DTW 3×3 手算表,report/evidence/exp3_dtw_handcalc.txt,python -m scripts.selft
 模板数 1/3/5 对照,report/tables/exp3_accuracy.csv; report/tables/exp3_template_curve.csv,python -m scripts.exp3_recognize --all; python -m scripts.exp3_template_curve
 normalize none/cmn 对照,report/tables/exp3_accuracy.csv,python -m scripts.exp3_recognize --all
 端点段 vs 整段,report/tables/exp3_accuracy.csv; report/tables/exp3_predictions_endpoint.csv,python -m scripts.exp3_recognize --all
-7 张自绘图,report/fig/fig2_1_melbank.png … fig3_2_dtw_grid.png,python -m scripts.exp2_ablation; python -m scripts.exp2_freq_figs; python -m scripts.exp3_figs
-界面截图,report/fig/app_main.png,python -m dsp.app
+7 张自绘图（不含界面截图）,report/fig/fig2_1_melbank.png … fig3_2_dtw_grid.png,python -m scripts.exp2_ablation; python -m scripts.exp2_freq_figs; python -m scripts.exp3_figs
+界面截图,report/fig/app_main.png,python -m dsp.app 起界面后由 out/gui_shot.py 抓窗口（取证脚本不入库）

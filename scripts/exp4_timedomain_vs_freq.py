@@ -84,11 +84,27 @@ def main(argv=None):
                 f"耗时 {dt:.1f}s"])
     print(f"  时域 normalize=False: acc={acc:.3f} ({n_ok}/50)  {dt:.1f}s", flush=True)
 
-    # ---- 频域两行（本实验主结果，口径与 exp3_accuracy.csv 一致）----
-    out.append(["MFCC [T,13]", 13, "无", "无", "0.8000", 40, 50,
-                "本实验主结果（整段/none/5模板），见 exp3_accuracy.csv"])
-    out.append(["MFCC [T,13]", 13, "CMN（段内逐维去均值）", "无", "0.8200", 41, 50,
-                "加 CMN 只多 1 条，按 1 条=2 个百分点口径属无显著差别"])
+    # ---- 频域两行（读 exp3_accuracy.csv，不写死数字）----
+    acc_path = TABLES_DIR / "exp3_accuracy.csv"
+    if not acc_path.exists():
+        raise SystemExit(
+            "缺少 report/tables/exp3_accuracy.csv：先跑 "
+            "python -m scripts.exp3_recognize --all")
+    with acc_path.open(encoding="utf-8") as fh:
+        acc_rows = {r["条件"]: r for r in csv.DictReader(fh)}
+    for cond, norm_label, note_text in (
+        ("main", "无", "本实验主结果（整段/none/5模板），读自 exp3_accuracy.csv"),
+        ("normalize_cmn", "CMN（段内逐维去均值）",
+         "加 CMN 只多 1 条，按 1 条=2 个百分点口径属无显著差别"),
+    ):
+        r = acc_rows[cond]
+        n_total = int(r["测试条数"])
+        acc = float(r["准确率"])
+        out.append(["MFCC [T,13]", 13, norm_label, "无",
+                    f"{acc:.4f}", round(acc * n_total), n_total, note_text])
+        print(f"  频域 {cond}: acc={acc:.3f} "
+              f"({round(acc * n_total)}/{n_total})（读自 exp3_accuracy.csv）",
+              flush=True)
 
     path = TABLES_DIR / "exp4_timedomain_vs_freq.csv"
     with path.open("w", newline="", encoding="utf-8") as fh:

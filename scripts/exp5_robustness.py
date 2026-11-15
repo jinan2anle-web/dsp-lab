@@ -4,8 +4,8 @@
     python -m scripts.exp5_robustness
 
 协议见 docs/测试实验设计.md 第 3/4 节：
-    T1 噪声：SNR ∈ {inf, 20, 10, 5, 0} dB × seed ∈ {0,1,2} = 15 行
-             （inf 档不重复 3 次，只 1 行；再加 1 行 seed=avg 写 3 次平均 ± 极差）
+    T1 噪声：SNR ∈ {inf, 20, 10, 5, 0} dB × seed ∈ {0,1,2}（inf 档 seed 不影响，
+             仍写 3 行）＋ 每档 1 行 seed=avg 写 3 次平均 ± 极差，共 20 行
     T2 增益：factor ∈ {0.5, 1.0, 2.0} × normalize ∈ {none, cmn} = 6 行
 输出 report/tables/exp5_robustness.csv，列：
     实验,条件,参数,重复次数,识别率,正确条数,总条数,耗时s,seed,备注
@@ -22,7 +22,7 @@ import time
 
 import numpy as np
 
-from dsp import augment, config, io_wav, mfcc, templates
+from dsp import augment, config, endpoint, io_wav, mfcc, templates
 from scripts import exp3_recognize as rec
 
 TABLES_DIR = config.REPO_ROOT / "report" / "tables"
@@ -41,9 +41,11 @@ def _snr_selftest():
     """开跑前核 SNR 口径（3 行），偏差 > 0.5 dB 直接抛错，不白跑 750 次。"""
     p = config.wav_paths()[0]
     x0, fs = io_wav.read_wav(p)
-    # 语音段 5600:23760（= 端点检测区间，见任务单），与 add_white_noise 内部口径一致
-    s0, s1 = 5600, 23760
+    # 语音段用 endpoint.detect() 现场取：每条录音区间不同，不能写死某一条
+    got = endpoint.detect(x0, fs)
+    s0, s1 = (0, len(x0)) if got is None else got
     p_s = float(np.mean(x0[s0:s1] ** 2))
+    print(f"  SNR 自测语音段 [{s0}, {s1})，P_s = {p_s:.10f}")
     lines = []
     ok = True
     for snr in (20.0, 10.0, 0.0):
