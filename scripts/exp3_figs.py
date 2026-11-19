@@ -76,7 +76,7 @@ def fig_system(plt):
     ax.text(3.5, 2.62, "mfcc.extract() 是唯一入口：\n模板与查询必须同参数",
             ha="center", fontsize=7.5, color="#777777")
 
-    ax.set_title("图 3.1  实验三系统框图：两条路径共用同一套 MFCC，DTW 只负责帧数不等时的时间对齐",
+    ax.set_title("实验三系统框图：两条路径共用同一套 MFCC，DTW 只负责帧数不等时的时间对齐",
                  fontsize=11, pad=10)
     fig.tight_layout()
     fig.savefig(FIG_DIR / "fig3_1_system.png", dpi=300)
@@ -106,7 +106,7 @@ def fig_grid(plt):
     ys = [p[0] for p in path]
     xs = [p[1] for p in path]
     ax.plot(xs, ys, color="#38E1A0", lw=1.2, label=f"最优路径（{len(path)} 步）")
-    ax.set_title(f"图 3.2a  累计代价矩阵 $D(i,j)$，$D(N,M)$={dist:.4f}\n"
+    ax.set_title(f"累计代价矩阵 $D(i,j)$，$D(N,M)$={dist:.4f}\n"
                  f"查询 {test_path.name}（{len(q)} 帧）× 模板 {train_path.name}（{len(r)} 帧）",
                  fontsize=9.5)
     ax.set_xlabel("模板帧 j")

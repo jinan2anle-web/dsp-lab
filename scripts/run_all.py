@@ -2,8 +2,8 @@
 
 跑法：
 
-    python -m scripts.run_all            # 全跑（约 4–5 分钟）
-    python -m scripts.run_all --fast     # 跳过消融类，只跑主结果与图（exp2_freq_figs 照跑）
+    python -m scripts.run_all            # 全跑（本机实测 477 s，约 8 分钟；跨机波动 ±50%）
+    python -m scripts.run_all --fast     # 跳过消融类，只跑主结果与图（本机实测 48 s）
 
 产物位置（与 docs/实验二三_分工与交接单.md §5.2 一致）：
     report/evidence/*.txt   自测证据

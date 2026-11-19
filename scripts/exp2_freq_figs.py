@@ -57,7 +57,7 @@ def main():
     ax.set_ylim(0.0, fs / 2)
     ax.set_xlabel("时间 / s")
     ax.set_ylabel("频率 / Hz")
-    ax.set_title("图 2.4  0_01.wav 的短时语谱图")
+    ax.set_title("0_01.wav 的短时语谱图")
     ax.legend(loc="upper right", fontsize=8, framealpha=0.9)
     cbar = fig.colorbar(im, ax=ax, pad=0.02)
     cbar.set_label("谱能量 / dB")
@@ -88,7 +88,7 @@ def main():
                 ha="right", va="bottom", fontsize=8)
     axes[0].set_ylabel("功率谱 $|X[k]|^2$（对数轴）")
     axes[0].legend(fontsize=8, loc="upper right")
-    fig.suptitle("图 2.5  静音、语音起始与语音中段的功率谱：预加重前后对比", fontsize=11)
+    fig.suptitle("静音、语音起始与语音中段的功率谱：预加重前后对比", fontsize=11)
     fig.tight_layout()
     path_power = FIG_DIR / "fig2_5_power_spectrum.png"
     fig.savefig(path_power, dpi=300)

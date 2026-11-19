@@ -92,7 +92,7 @@ def fig_melbank(plt):
     ax.set_xlim(0, config.FS / 2)
     ax.set_xlabel("频率 / Hz")
     ax.set_ylabel("权值 $H_m(k)$")
-    ax.set_title(f"图 2.1  Mel 三角滤波器组（M={config.N_MELS}，N={config.NFFT}，"
+    ax.set_title(f"Mel 三角滤波器组（M={config.N_MELS}，N={config.NFFT}，"
                  f"$f_s$={config.FS} Hz，f∈[{config.F_LOW:.0f}, {config.F_HIGH:.0f}] Hz）")
     ax.grid(alpha=0.3)
     ax2 = ax.twinx()
@@ -129,7 +129,7 @@ def fig_triangles(plt):
     ax.set_ylim(0, 1.3)
     ax.set_xlabel("频率 / Hz")
     ax.set_ylabel("权值")
-    ax.set_title("图 2.2  $F_m$（Hz）换算成频点坐标 $b_m=N\\cdot F_m/f_s$，重叠段权值和为 1",
+    ax.set_title("$F_m$（Hz）换算成频点坐标 $b_m=N\\cdot F_m/f_s$，重叠段权值和为 1",
                  fontsize=11)
     ax.legend(fontsize=8, loc="upper right")
     ax.grid(alpha=0.3)
@@ -204,7 +204,7 @@ def fig_flow(plt):
     ax.set_ylabel("倒谱阶 n")
     fig.colorbar(im, ax=ax, fraction=0.046, pad=0.02)
 
-    fig.suptitle(f"图 2.3  MFCC 六步流程（{p.name}，含 148 帧；②③④⑤ 画的是第 {k} 帧）",
+    fig.suptitle(f"MFCC 六步流程（{p.name}，含 148 帧；②③④⑤ 画的是第 {k} 帧）",
                  fontsize=12)
     fig.tight_layout()
     fig.savefig(FIG_DIR / "fig2_3_mfcc_flow.png", dpi=300)
